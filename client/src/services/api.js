@@ -12,6 +12,7 @@ export function apiCall(method, path, data) {
     return new Promise((resolve, reject) => {
         return axios[method.toLowerCase()](path, data)
             .then((res) => {
+                //!
                 console.log("%c Axios Request", "color: blue; font-size: 20px");
                 console.log(res.data);
                 resolve(res.data);
