@@ -1,6 +1,15 @@
 import { apiCall, setTokenHeader } from "../../services/api";
-import { SET_CURRENT_USER, SET_USER_PROFILE } from "../actionTypes";
+import {
+    SET_CURRENT_USER,
+    SET_USER_PROFILE,
+    SET_USER_LIKES,
+    SET_USER_FOLLOWING,
+} from "../actionTypes";
 import { addError, removeError } from "./errors";
+
+export function setAuthorizationToken(token) {
+    setTokenHeader(token);
+}
 
 export function setCurrentUser(user) {
     return {
@@ -16,8 +25,18 @@ export function setUserProfile(profile) {
     };
 }
 
-export function setAuthorizationToken(token) {
-    setTokenHeader(token);
+export function setUserLikes(likes) {
+    return {
+        type: SET_USER_LIKES,
+        likes,
+    };
+}
+
+export function setUserFollowing(data) {
+    return {
+        type: SET_USER_FOLLOWING,
+        data,
+    };
 }
 
 export function editProfile(user_id, data) {
@@ -49,6 +68,32 @@ export function getProfile(user_id) {
                 console.log("%c Fetched Profile Info", "color: blue; font-size: 20px");
                 dispatch(setUserProfile(res));
                 dispatch(removeError);
+            })
+            .catch((err) => dispatch(addError(err.message)));
+    };
+}
+
+export function getUserLikes(user_id) {
+    return (dispatch) => {
+        return apiCall("get", `/api/user/${user_id}/likes`)
+            .then((res) => {
+                //!
+                console.log("%c Fetched User Likes", "color: blue; font-size: 20px");
+                dispatch(setUserLikes(res));
+                dispatch(removeError());
+            })
+            .catch((err) => dispatch(addError(err.message)));
+    };
+}
+
+export function getUserFollowing(user_id) {
+    return (dispatch) => {
+        return apiCall("get", `/api/user/${user_id}/following`)
+            .then((res) => {
+                //!
+                console.log("%c Fetched User Following", "color: blue; font-size: 20px");
+                dispatch(setUserFollowing(res));
+                dispatch(removeError());
             })
             .catch((err) => dispatch(addError(err.message)));
     };
