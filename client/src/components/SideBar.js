@@ -82,7 +82,6 @@ function SideBar() {
                     <Menu
                         id="long-menu"
                         anchorEl={anchorEl}
-                        keepMounted
                         open={open}
                         onClose={handleClose}
                     >
