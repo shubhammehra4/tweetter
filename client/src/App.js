@@ -1,8 +1,13 @@
 import React, { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
 import { configureStore } from "./store/index";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { setAuthorizationToken, setCurrenUser } from "./store/actions/auth";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from "react-router-dom";
+import { setAuthorizationToken, setCurrentUser } from "./store/actions/auth";
 import jwtDecode from "jwt-decode";
 
 const Main = lazy(() => import("./pages/Main"));
@@ -13,9 +18,9 @@ const store = configureStore();
 if (localStorage.jwtToken) {
     setAuthorizationToken(localStorage.jwtToken);
     try {
-        store.dispatch(setCurrenUser(jwtDecode(localStorage.jwtToken)));
+        store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
     } catch (err) {
-        store.dispatch(setCurrenUser({}));
+        store.dispatch(setCurrentUser({}));
     }
 }
 
@@ -28,10 +33,18 @@ function App() {
                 <Suspense fallback={<div>Loading...</div>}>
                     <Switch>
                         <Route path="/auth">
-                            {!currentUser.isAuthenticated ? <Auth /> : <Redirect exact to="/" />}
+                            {!currentUser.isAuthenticated ? (
+                                <Auth />
+                            ) : (
+                                <Redirect exact to="/" />
+                            )}
                         </Route>
                         <Route path="/">
-                            {currentUser.isAuthenticated ? <Main /> : <Redirect exact to="/auth" />}
+                            {currentUser.isAuthenticated ? (
+                                <Main />
+                            ) : (
+                                <Redirect exact to="/auth" />
+                            )}
                         </Route>
                         <Route path="*">
                             <Redirect to="/" />

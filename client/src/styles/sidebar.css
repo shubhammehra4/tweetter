@@ -1,0 +1,58 @@
+.sidebar {
+  height: 100vh;
+}
+
+.sidebar .brand {
+  margin-top: 0.8em;
+  margin-bottom: 0.2em;
+  margin-right: 0.5em;
+  font-size: 3em;
+  color: #1da1f2;
+  padding: 0.2em;
+  cursor: pointer;
+}
+
+.sidebar a {
+  font-weight: 600;
+  font-size: 2em;
+  padding: 0.5em;
+  border-radius: 3em;
+}
+
+.sidebar a:hover {
+  -webkit-transition: color 200ms ease-out;
+  transition: color 200ms ease-out;
+  color: #1da1f2;
+  background-color: #1da0f218;
+}
+
+.sidebar a svg {
+  margin-right: 1em;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.sidebar .user__pill {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: auto;
+  margin-bottom: 1.5em;
+  padding: 0.2em 1em;
+  padding-bottom: 0.1em;
+  border-radius: 3em;
+  max-width: 200px;
+}
+
+.sidebar .user__pill:hover {
+  background-color: #1da0f218;
+}
+
+.sidebar .user__pill .info {
+  margin: auto 0 auto 0.5em;
+}
+
+.selected {
+  color: #1da1f2;
+}
