@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { setAuthorizationToken, setCurrentUser } from "./store/actions/auth";
 import jwtDecode from "jwt-decode";
+import Load from "./components/Load";
 
 const Main = lazy(() => import("./pages/Main"));
 const Auth = lazy(() => import("./pages/auth/Auth"));
@@ -30,7 +31,7 @@ function App() {
     return (
         <Provider store={store}>
             <Router>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Load />}>
                     <Switch>
                         <Route path="/auth">
                             {!currentUser.isAuthenticated ? (
