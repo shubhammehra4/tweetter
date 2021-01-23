@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import {
     Flex,
     Center,
@@ -9,20 +9,31 @@ import {
     ModalBody,
     ModalContent,
     ModalOverlay,
+    Box,
     useDisclosure,
 } from "@chakra-ui/react";
 import { AiOutlineTwitter } from "react-icons/ai";
+import Signin from "./Signin";
+import twitterBig from "../../twitter-big.png";
+
+const Signup = lazy(() => import("./Signup"));
 
 function Auth() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Flex height="100vh">
-            <Image
-                fit="contain"
-                src="https://www.trustedreviews.com/wp-content/uploads/sites/54/2018/02/Twitter.jpg"
-            />
-            <Center flexGrow={1} flexDirection="column" flexWrap="wrap">
-                <div className="p-4">
+            <Center flex={0.5} overflow="hidden" maxWidth="950px">
+                <Image
+                    src={twitterBig}
+                    className="transform rotate-15 scale-x-150 scale-y-150 translate-x-48"
+                />
+            </Center>
+
+            <Center flex={0.5} flexDirection="column" flexWrap="wrap">
+                <Box width="70%" className="mb-auto">
+                    <Signin />
+                </Box>
+                <div className="p-4 mb-auto">
                     <Icon as={AiOutlineTwitter} fontSize="4em" />
 
                     <h1 className="py-2 text-3xl font-bold w-96">
@@ -42,13 +53,17 @@ function Auth() {
                     <Modal onClose={onClose} isOpen={isOpen} isCentered>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalBody>SignUp Form</ModalBody>
+                            <ModalBody>
+                                <Suspense fallback={<div></div>}>
+                                    <Signup />
+                                </Suspense>
+                            </ModalBody>
                         </ModalContent>
                     </Modal>
                     <Button
+                        borderRadius="5em"
                         variant="outline"
                         mt={3}
-                        borderRadius="5em"
                         colorScheme="blue"
                         width="100%"
                     >
