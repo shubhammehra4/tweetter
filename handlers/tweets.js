@@ -25,25 +25,6 @@ exports.createTweet = async function (req, res, next) {
     }
 };
 
-exports.getTweet = async function (req, res, next) {
-    try {
-        let foundTweet = await db.Tweet.findById(req.params.tweet_id)
-            .populate("user", {
-                username: true,
-                profileImageThumb: true,
-                name: true,
-            })
-            .populate("likes", {
-                username: true,
-            })
-            .lean();
-
-        return res.status(200).json(foundTweet);
-    } catch (err) {
-        return next(err);
-    }
-};
-
 exports.deleteTweet = async function (req, res, next) {
     try {
         let foundTweet = await db.Tweet.findById(req.params.tweet_id);
@@ -105,6 +86,23 @@ exports.unlikeTweet = async function (req, res, next) {
                 message: "Already Disliked!",
             });
         }
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.addComment = async function (req, res, next) {
+    try {
+        let foundTweet = await db.Tweet.findById(req.params.tweet_id);
+        await foundTweet.comments.push({
+            text: req.body.comment,
+            user: req.params.id,
+        });
+        await foundTweet.save();
+
+        return res.status(201).json({
+            message: "Successful",
+        });
     } catch (err) {
         next(err);
     }

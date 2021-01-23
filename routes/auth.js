@@ -3,7 +3,9 @@ const express = require("express"),
 
 const { signup, signin } = require("../handlers/auth");
 
-router.post("/signup", signup);
+const { uploadImage } = require("../middlewares/uploads");
+
+router.post("/signup", uploadImage, signup);
 
 router.post("/signin", signin);
 

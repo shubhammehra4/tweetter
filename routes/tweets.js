@@ -5,13 +5,15 @@ const express = require("express"),
 
 const {
     createTweet,
-    getTweet,
     deleteTweet,
     likeTweet,
     unlikeTweet,
 } = require("../handlers/tweets");
+const { uploadImage } = require("../middlewares/uploads");
 
-router.route("/").post(createTweet);
+const { getTweet } = require("../handlers/getTweet");
+
+router.route("/").post(uploadImage, createTweet);
 
 router.route("/:tweet_id").get(getTweet).delete(deleteTweet);
 

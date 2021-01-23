@@ -8,9 +8,7 @@ const tweetSchema = new mongoose.Schema(
             required: true,
             maxlength: 160,
         },
-        image: {
-            type: String,
-        },
+        images: [],
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
@@ -26,6 +24,16 @@ const tweetSchema = new mongoose.Schema(
             default: 0,
             min: 0,
         },
+        comments: [
+            {
+                text: String,
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "User",
+                },
+                createdAt: new Date(),
+            },
+        ],
     },
     {
         timestamps: true,
@@ -37,7 +45,10 @@ tweetSchema.pre("remove", async function (next) {
         let user = await User.findById(this.user);
         user.tweets.remove(this.id);
         //TODO: optimise this query
-        await User.updateMany({}, { $pull: { likedMessages: { $in: this.id } } });
+        await User.updateMany(
+            { likedMessages: { $in: this.id } },
+            { $pull: { likedMessages: { $in: this.id } } }
+        );
         await user.save();
 
         return next();

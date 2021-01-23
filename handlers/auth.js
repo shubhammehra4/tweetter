@@ -65,7 +65,9 @@ exports.signup = async function (req, res, next) {
         });
     } catch (err) {
         if (err.code === 11000) {
-            err.keyPattern.email ? (err.message = "email") : (err.message = "username");
+            err.keyPattern.email
+                ? (err.message = "email")
+                : (err.message = "username");
         }
         return next({
             status: 400,
@@ -73,22 +75,3 @@ exports.signup = async function (req, res, next) {
         });
     }
 };
-
-// exports.checkUnique = async function (req, res, next) {
-//     try {
-//         let user = await db.User.find({ email: req.body.email });
-
-//         if (user) {
-//             return res.status(400).json({ message: "email" });
-//         } else {
-//             let user2 = await db.User.find({ username: req.body.username });
-//             if (user2) {
-//                 return res.status(400).json({ message: "username" });
-//             } else {
-//                 return res.status.json({ message: "unique" });
-//             }
-//         }
-//     } catch (err) {
-//         return next(err);
-//     }
-// };

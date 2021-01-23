@@ -16,6 +16,13 @@ const userSchema = new mongoose.Schema(
         name: {
             type: String,
         },
+        bio: {
+            type: String,
+            maxlength: 160,
+        },
+        location: {
+            type: String,
+        },
         password: {
             type: String,
             required: true,
@@ -51,6 +58,12 @@ const userSchema = new mongoose.Schema(
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User",
+            },
+        ],
+        bookmarks: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Tweet",
             },
         ],
     },

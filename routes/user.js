@@ -3,18 +3,19 @@ const express = require("express"),
         mergeParams: true,
     });
 
+const { followUser, unfollowUser } = require("../handlers/user");
 const {
     getUser,
     getUserLikes,
     getUserFollowing,
-    followUser,
-    unfollowUser,
-} = require("../handlers/user");
-const { profileSetup, resetPassword } = require("../handlers/profile");
+} = require("../handlers/getUser");
+
+const { editProfile, resetPassword } = require("../handlers/profile");
+const { uploadImage } = require("../middlewares/uploads");
 
 router.route("/profile").get(getUser);
 
-router.route("/profile/edit").post(profileSetup);
+router.route("/profile/edit").post(uploadImage, editProfile);
 
 router.route("/profile/reset-password").post(resetPassword);
 

@@ -1,35 +1,10 @@
-const db = require("../models"),
-    cloudinary = require("cloudinary").v2,
-    fs = require("fs");
-
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+const db = require("../models");
 
 //* Change response and send updated token
-exports.profileSetup = async function (req, res, next) {
+exports.editProfile = async function (req, res, next) {
     try {
-        let uploadedImages = {};
-        if (req.files) {
-            const data = req.files.file.tempFilePath;
-            const uploadFile = await cloudinary.uploader.upload(data);
-
-            console.info(uploadFile);
-            uploadedImages.profileImageID = uploadFile.public_id;
-            uploadedImages.profileImage = uploadFile.secure_url;
-            uploadedImages.profileImageThumb = uploadFile.secure_url;
-
-            fs.unlink(data, () => {
-                console.info("done removing!!!");
-            });
-        }
-
-        //TODO: upload image to cloud from here
         let updatedUser = await db.User.findByIdAndUpdate(req.params.id, {
             ...req.body,
-            ...uploadedImages,
         }).select("name profileImageThumb");
 
         return res.status(200).json(updatedUser);
