@@ -1,6 +1,6 @@
 import React from "react";
 import { Center, Image } from "@chakra-ui/react";
-import twitter from "../twitter.svg";
+import twitter from "../images/twitter.svg";
 
 function Load() {
     return (

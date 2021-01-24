@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineTwitter } from "react-icons/ai";
 import Signin from "./Signin";
-import twitterBig from "../../twitter-big.png";
+import twitterBig from "../../images/twitter-big.png";
 
 const Signup = lazy(() => import("./Signup"));
 
