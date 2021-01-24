@@ -12,15 +12,20 @@ function Signin() {
     const { register, errors, setError, handleSubmit, formState } = useForm();
 
     function onSubmit(values) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (values.email === "naruto@gmail.com") {
                 setError("email", {
                     type: "manual",
                     message: "already taken!",
                 });
-                resolve();
+                console.log(formState);
+
+                reject();
             } else {
-                alert(JSON.stringify(values, null, 2));
+                console.log(formState);
+                setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
+                }, 1500);
                 resolve();
             }
         });

@@ -5,7 +5,6 @@ import {
     FormLabel,
     FormControl,
     Input,
-    Heading,
     Button,
 } from "@chakra-ui/react";
 
@@ -28,9 +27,9 @@ function Signup() {
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Heading my={5} as="h2" size="md">
+            <h5 className="text-center text-2xl font-bold my-5">
                 Create Your Account
-            </Heading>
+            </h5>
 
             <FormControl isInvalid={errors.name}>
                 <FormLabel htmlFor="name">Name</FormLabel>

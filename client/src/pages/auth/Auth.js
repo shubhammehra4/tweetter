@@ -22,7 +22,10 @@ function Auth() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Flex height="100vh">
-            <Center flex={0.5} overflow="hidden" maxWidth="950px">
+            <Center
+                flex={0.5}
+                className="bg-blue-200 overflow-hidden max-w-5xl"
+            >
                 <Image
                     src={twitterBig}
                     className="transform rotate-15 scale-x-150 scale-y-150 translate-x-48"
@@ -54,7 +57,13 @@ function Auth() {
                         <ModalOverlay />
                         <ModalContent>
                             <ModalBody>
-                                <Suspense fallback={<div></div>}>
+                                <Suspense
+                                    fallback={
+                                        <div className="p-12 text-center">
+                                            Loading...
+                                        </div>
+                                    }
+                                >
                                     <Signup />
                                 </Suspense>
                             </ModalBody>
