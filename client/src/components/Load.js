@@ -5,7 +5,7 @@ import twitter from "../twitter.svg";
 function Load() {
     return (
         <Center height="100vh">
-            <Image src={twitter} />
+            <Image className="animate-bounce" src={twitter} />
         </Center>
     );
 }
