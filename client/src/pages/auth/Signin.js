@@ -8,33 +8,40 @@ import {
     Button,
 } from "@chakra-ui/react";
 
-function Signin() {
-    const { register, errors, setError, handleSubmit, formState } = useForm();
+function Signin(props) {
+    const { onAuth } = props;
+    const { register, errors, handleSubmit, formState } = useForm();
 
     function onSubmit(values) {
-        return new Promise((resolve, reject) => {
-            if (values.email === "naruto@gmail.com") {
-                setError("email", {
-                    type: "manual",
-                    message: "already taken!",
-                });
-                console.log(formState);
+        onAuth("signin", values)
+            .then(() => {
+                console.log("Sent");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        // return new Promise((resolve, reject) => {
+        //     if (values.email === "naruto@gmail.com") {
+        //         setError("email", {
+        //             type: "manual",
+        //             message: "already taken!",
+        //         });
+        //         console.log(formState);
 
-                reject();
-            } else {
-                console.log(formState);
-                setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                }, 1500);
-                resolve();
-            }
-        });
+        //         reject();
+        //     } else {
+        //         console.log(formState);
+        //         setTimeout(() => {
+        //             alert(JSON.stringify(values, null, 2));
+        //         }, 1500);
+        //         resolve();
+        //     }
+        // });
     }
     return (
         <form
             className="flex align-middle justify-items-center"
-            onSubmit={handleSubmit(onSubmit)}
-        >
+            onSubmit={handleSubmit(onSubmit)}>
             <FormControl width="45%" className="p-2" isInvalid={errors.email}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
@@ -56,8 +63,7 @@ function Signin() {
             <FormControl
                 width="45%"
                 className="p-2"
-                isInvalid={errors.password}
-            >
+                isInvalid={errors.password}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                     id="password"
@@ -78,8 +84,7 @@ function Signin() {
                 colorScheme="blue"
                 width="30%"
                 isLoading={formState.isSubmitting}
-                type="submit"
-            >
+                type="submit">
                 Login
             </Button>
         </form>

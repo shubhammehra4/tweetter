@@ -8,22 +8,30 @@ import {
     Button,
 } from "@chakra-ui/react";
 
-function Signup() {
-    const { register, errors, setError, handleSubmit, formState } = useForm();
+function Signup(props) {
+    const { onAuth, reqError } = props;
+    const { register, errors, handleSubmit, formState } = useForm();
 
     function onSubmit(values) {
-        return new Promise((resolve) => {
-            if (values.email === "naruto@gmail.com") {
-                setError("email", {
-                    type: "manual",
-                    message: "already taken!",
-                });
-                resolve();
-            } else {
-                alert(JSON.stringify(values, null, 2));
-                resolve();
-            }
-        });
+        onAuth("signup", values)
+            .then(() => {
+                console.log("Done");
+            })
+            .catch(() => {
+                console.log(reqError);
+            });
+        // return new Promise((resolve) => {
+        //     if (values.email === "naruto@gmail.com") {
+        //         setError("email", {
+        //             type: "manual",
+        //             message: "already taken!",
+        //         });
+        //         resolve();
+        //     } else {
+        //         alert(JSON.stringify(values, null, 2));
+        //         resolve();
+        //     }
+        // });
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -106,8 +114,7 @@ function Signup() {
                 colorScheme="blue"
                 borderRadius={100}
                 isLoading={formState.isSubmitting}
-                type="submit"
-            >
+                type="submit">
                 Submit
             </Button>
         </form>

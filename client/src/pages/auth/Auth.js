@@ -1,4 +1,6 @@
 import React, { lazy, Suspense } from "react";
+import { connect } from "react-redux";
+import { authUser } from "../../store/actions/auth";
 import {
     Flex,
     Center,
@@ -18,14 +20,14 @@ import twitterBig from "../../images/twitter-big.png";
 
 const Signup = lazy(() => import("./Signup"));
 
-function Auth() {
+function Auth(props) {
+    const { authUser, errors } = props;
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <Flex height="100vh">
             <Center
                 flex={0.5}
-                className="bg-blue-200 overflow-hidden max-w-5xl"
-            >
+                className="bg-blue-300 overflow-hidden max-w-5xl">
                 <Image
                     src={twitterBig}
                     className="transform rotate-15 scale-x-150 scale-y-150 translate-x-48"
@@ -34,7 +36,7 @@ function Auth() {
 
             <Center flex={0.5} flexDirection="column" flexWrap="wrap">
                 <Box width="70%" className="mb-auto">
-                    <Signin />
+                    <Signin onAuth={authUser} />
                 </Box>
                 <div className="p-4 mb-auto">
                     <Icon as={AiOutlineTwitter} fontSize="4em" />
@@ -49,8 +51,7 @@ function Auth() {
                         mt={3}
                         colorScheme="blue"
                         width="100%"
-                        onClick={onOpen}
-                    >
+                        onClick={onOpen}>
                         Signup
                     </Button>
                     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -62,9 +63,11 @@ function Auth() {
                                         <div className="p-12 text-center">
                                             Loading...
                                         </div>
-                                    }
-                                >
-                                    <Signup />
+                                    }>
+                                    <Signup
+                                        onAuth={authUser}
+                                        reqError={errors}
+                                    />
                                 </Suspense>
                             </ModalBody>
                         </ModalContent>
@@ -74,8 +77,7 @@ function Auth() {
                         variant="outline"
                         mt={3}
                         colorScheme="blue"
-                        width="100%"
-                    >
+                        width="100%">
                         Log In
                     </Button>
                 </div>
@@ -84,4 +86,9 @@ function Auth() {
     );
 }
 
-export default Auth;
+function mapStateToProps(state) {
+    return {
+        errors: state.errors,
+    };
+}
+export default connect(mapStateToProps, { authUser })(Auth);
