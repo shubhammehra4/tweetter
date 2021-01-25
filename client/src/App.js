@@ -42,7 +42,7 @@ function App() {
                                 {!currentUser.isAuthenticated ? (
                                     <Auth />
                                 ) : (
-                                    <Redirect exact to="/" />
+                                    <Redirect exact to="/home" />
                                 )}
                             </Route>
                             <Route path="/">
