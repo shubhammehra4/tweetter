@@ -2,7 +2,7 @@
 @tailwind components;
 
 aside a {
-    @apply text-3xl my-2 p-3 font-semibold rounded-full transition-colors duration-300 ease-out;
+    @apply text-3xl my-1 p-3 font-semibold rounded-full transition-colors duration-300 ease-out;
 }
 
 aside a:hover {
@@ -15,7 +15,20 @@ aside a span {
 aside button span {
     text-align: left;
 }
+
+.tweet-btn {
+    @apply bg-blue-400 py-2 px-6 rounded-full text-white font-semibold;
+}
+
 @tailwind utilities;
+
+@layer utilities {
+    @variants hover {
+        .filter-grayscale {
+            filter: grayscale(0.25);
+        }
+    }
+}
 
 button:focus {
     outline: none;
