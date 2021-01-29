@@ -9,7 +9,10 @@ const express = require("express"),
 const app = express();
 
 const errorHandler = require("./handlers/error");
-const { loginRequired, ensureCorrectUser } = require("./middlewares/authorization");
+const {
+    loginRequired,
+    ensureCorrectUser,
+} = require("./middlewares/authorization");
 
 const authRoutes = require("./routes/auth"),
     tweetRoutes = require("./routes/tweets"),
@@ -50,7 +53,11 @@ app.get("/api/tweets", loginRequired, async function (req, res, next) {
             .sort({ createdAt: -1 })
             .limit(limit)
             .skip(startIdx)
-            .populate("user", { username: true, profileImageThumb: true })
+            .populate("user", {
+                username: true,
+                profileImageThumb: true,
+                name: true,
+            })
             .select("text image user createdAt likesNumber")
             .lean();
 
@@ -69,7 +76,9 @@ app.use(function (req, res, next) {
 app.use(errorHandler);
 
 app.listen(process.env.PORT, function () {
-    console.log(`Running on ${process.env.PORT} in ${process.env.NODE_ENV} ENV`);
+    console.log(
+        `Running on ${process.env.PORT} in ${process.env.NODE_ENV} ENV`
+    );
 });
 // {
 //     origin: [process.env.CLIENT_URL],
