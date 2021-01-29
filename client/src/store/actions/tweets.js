@@ -36,7 +36,7 @@ export const unlikeTweet = (id) => ({
 export const fetchTweets = (skip) => {
     return (dispatch) => {
         //!
-        console.log("%c Fetching Messages");
+        console.log("%c Fetching Messages", "color: blue; font-size: 20px");
         return apiCall("get", `api/tweets?skip=${skip}`)
             .then((res) => {
                 dispatch(loadTweets(res));

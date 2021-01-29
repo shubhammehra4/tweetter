@@ -16,33 +16,34 @@ import {
     Avatar,
     IconButton,
 } from "@chakra-ui/react";
+import { ColorModeSwitcher } from "../ColorModeSwitcher";
 function Sidebar(props) {
     const { currentUser } = props;
     return (
-        <aside className="h-full flex flex-col items-end text-xl border-r-2">
+        <aside className="h-full flex flex-col items-end text-xl">
             <Icon className="text-6xl mr-20" as={AiOutlineTwitter} />
             <div className=" flex flex-col mr-4 h-full">
-                <Link exact to="/home">
+                <Link to="/home">
                     <Icon as={BiHomeCircle} />
                     <span>Home</span>
                 </Link>
-                <Link exact to="/explore">
+                <Link to="/explore">
                     <Icon as={HiOutlineHashtag} />
                     <span>Explore</span>
                 </Link>
-                <Link exact to="/notifications">
+                <Link to="/notifications">
                     <Icon as={IoMdNotificationsOutline} />
                     <span>Notifications</span>
                 </Link>
-                <Link exact to="/messages">
+                <Link to="/messages">
                     <Icon as={AiOutlineMail} />
                     <span>Messages</span>
                 </Link>
-                <Link exact to="/bookmarks">
+                <Link to="/bookmarks">
                     <Icon as={IoMdNotificationsOutline} />
                     <span>Bookmarks</span>
                 </Link>
-                <Link exact to="/:username">
+                <Link to="/:username">
                     <Icon as={AiOutlineUser} />
                     <span>Profile</span>
                 </Link>
@@ -50,16 +51,19 @@ function Sidebar(props) {
                     <MenuButton
                         as={Button}
                         bg="white"
-                        _focus="none"
                         _hover="none"
                         fontSize="1.75rem"
-                        className="py-7 px-4 transition-colors duration-300 ease-out hover:bg-blue-100 hover:text-blue-500"
+                        className="py-7 px-4 transition-colors duration-300 ease-out hover:bg-blue-100 hover:text-blue-500 focus:outline-none"
                         borderRadius="10rem">
                         <Icon className="text-left mr-4" as={CgMoreO} />
                         More
                     </MenuButton>
                     <MenuList>
-                        <MenuItem icon={<AiOutlineUser />}>Options</MenuItem>
+                        <MenuItem>
+                            <Button>
+                                <ColorModeSwitcher justifySelf="flex-end" />
+                            </Button>
+                        </MenuItem>
                         <MenuDivider />
                         <MenuItem icon={<AiOutlineUser />}>Options</MenuItem>
                         <MenuItem icon={<AiOutlineUser />}>Options</MenuItem>

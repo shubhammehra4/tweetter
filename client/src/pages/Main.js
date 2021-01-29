@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { logout } from "../store/actions/auth";
 import Sidebar from "../components/Sidebar";
 
+import Home from "./home/Home";
+
 function Main(props) {
     const { errors, currentUser, logout } = props;
     return (
@@ -12,20 +14,14 @@ function Main(props) {
             <div
                 className="sticky top-0 z-10"
                 style={{ flexGrow: 1, height: "100vh" }}>
-                <Sidebar currentUser={currentUser} />
+                <Sidebar currentUser={currentUser} logout={logout} />
             </div>
-            <div style={{ flexGrow: 2 }}>
+            <div
+                className="ml-4 border-l-2 border-gray-100"
+                style={{ flexGrow: 2 }}>
                 <Switch>
                     <Route path="/home">
-                        <div>
-                            <h1>Home {currentUser.username}</h1>
-                            <button
-                                onClick={() => {
-                                    logout();
-                                }}>
-                                Logout
-                            </button>
-                        </div>
+                        <Home currentUser={currentUser} />
                     </Route>
                     <Route path="/explore">
                         <h1>Explore</h1>
