@@ -5,6 +5,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     fileUpload = require("express-fileupload"),
     compression = require("compression"),
+    morgan = require("morgan"),
     db = require("./models");
 const app = express();
 
@@ -18,17 +19,21 @@ const authRoutes = require("./routes/auth"),
     tweetRoutes = require("./routes/tweets"),
     userRoutes = require("./routes/user");
 
+app.use(
+    morgan(":method :url :status :res[content-length] - :response-time ms")
+);
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(compression());
+// app.use(compression());
 app.use(
     fileUpload({
         useTempFiles: true,
         uploadTimeout: 10,
     })
 );
+
 app.use("/api/auth", authRoutes);
 app.use("/api/user/:id/tweet", loginRequired, ensureCorrectUser, tweetRoutes);
 app.use("/api/user/:id", loginRequired, ensureCorrectUser, userRoutes);
