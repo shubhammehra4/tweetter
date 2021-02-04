@@ -45,7 +45,7 @@ tweetSchema.pre("remove", async function (next) {
         user.tweets.remove(this.id);
         //TODO: optimise this query
         await User.updateMany(
-            { likedMessages: { $in: this.id } },
+            { likedMessages: { $in: [this.id] } },
             { $pull: { likedMessages: { $in: this.id } } }
         );
         await user.save();
