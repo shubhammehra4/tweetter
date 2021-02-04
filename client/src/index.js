@@ -5,11 +5,28 @@ import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import jwtDecode from "jwt-decode";
+import { configureStore } from "./store/index";
+import { setAuthorizationToken, setCurrentUser } from "./store/actions/auth";
+
+const store = configureStore();
+
+if (localStorage.jwtToken) {
+    setAuthorizationToken(localStorage.jwtToken);
+    try {
+        store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+    } catch (err) {
+        store.dispatch(setCurrentUser({}));
+    }
+}
 
 ReactDOM.render(
     <StrictMode>
-        <ColorModeScript />
-        <App />
+        <Provider store={store}>
+            <ColorModeScript />
+            <App />
+        </Provider>
     </StrictMode>,
     document.getElementById("root")
 );

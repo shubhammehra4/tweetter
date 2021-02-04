@@ -13,7 +13,7 @@ function Main(props) {
             {errors && <div>{errors.message}</div>}
             <div
                 className="sticky top-0 z-10"
-                style={{ flexGrow: 1, height: "100vh" }}>
+                style={{ flexGrow: 1, height: "100vh", flexShrink: 2 }}>
                 <Sidebar currentUser={currentUser} logout={logout} />
             </div>
             <div

@@ -59,10 +59,14 @@ function Feed(props) {
                         authorUname={t.user.username}
                         authorName={t.user.name}
                         authorImg={t.user.profileImageThumb}
-                        like={like.bind(currentUser.id, t._id)}
-                        unlike={unlike.bind(currentUser.id, t._id)}
+                        like={like.bind(this, currentUser.id, t._id)}
+                        unlike={unlike.bind(this, currentUser.id, t._id)}
                         correctUser={currentUser.id === t.user._id}
-                        deleteTweet={deleteTweet.bind(currentUser.id, t._id)}
+                        deleteTweet={deleteTweet.bind(
+                            this,
+                            currentUser.id,
+                            t._id
+                        )}
                         ref={tweets.length === idx + 3 ? tweetElementRef : null}
                     />
                 ))}

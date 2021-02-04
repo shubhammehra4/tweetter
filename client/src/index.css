@@ -34,3 +34,7 @@ button:focus {
     outline: none;
     border: none;
 }
+
+aside {
+    flex-shrink: 2;
+}

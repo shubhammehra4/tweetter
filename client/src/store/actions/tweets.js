@@ -69,40 +69,32 @@ export const deleteTweet = (user_id, tweet_id) => {
                 console.log("%c Removed Tweet", "color: blue; font-size: 20px");
                 dispatch(removeTweet(tweet_id));
             })
-            .catch((err) => dispatch(addError(err.message)));
+            .catch((err) => dispatch(addError(err)));
     };
 };
 
 export const like = (user_id, tweet_id) => {
     return (dispatch) => {
-        return apiCall("post", `/api/users/${user_id}/messages/${tweet_id}/l`)
+        return apiCall("post", `/api/user/${user_id}/tweet/${tweet_id}/l`)
             .then((res) => {
-                if (res.message === "Successful") {
-                    //!
-                    console.log(
-                        "%c Liked Tweet",
-                        "color: blue; font-size: 20px"
-                    );
-                    dispatch(likeTweet(tweet_id));
-                }
+                //!
+                console.log("%c Liked Tweet", "color: blue; font-size: 20px");
+                dispatch(likeTweet(tweet_id));
             })
-            .catch((err) => dispatch(addError(err.message)));
+            .catch(() => {
+                dispatch(addError("Invalid Request"));
+            });
     };
 };
 
 export const unlike = (user_id, tweet_id) => {
     return (dispatch) => {
-        return apiCall("post", `/api/users/${user_id}/messages/${tweet_id}/ul`)
+        return apiCall("post", `/api/user/${user_id}/tweet/${tweet_id}/ul`)
             .then((res) => {
-                if (res.message === "Successful") {
-                    //!
-                    console.log(
-                        "%c Unliked Tweet",
-                        "color: blue; font-size: 20px"
-                    );
-                    dispatch(unlikeTweet(tweet_id));
-                }
+                //!
+                console.log("%c Unliked Tweet", "color: blue; font-size: 20px");
+                dispatch(unlikeTweet(tweet_id));
             })
-            .catch((err) => dispatch(addError(err.message)));
+            .catch(() => dispatch(addError("Invalid Request")));
     };
 };
