@@ -3,7 +3,12 @@ const db = require("../models"),
 
 exports.signin = async function (req, res, next) {
     try {
-        let user = await db.User.findOne({ email: req.body.email });
+        let user;
+        if (req.body.email) {
+            user = await db.User.findOne({ email: req.body.email });
+        } else {
+            user = await db.User.findOne({ username: req.body.username });
+        }
         let { id, username, name, email, profileImageThumb } = user;
         let isMatch = await user.comparePassword(req.body.password);
         if (isMatch) {

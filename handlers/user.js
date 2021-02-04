@@ -12,11 +12,11 @@ exports.followUser = async function (req, res, next) {
             await foundUser.save();
 
             return res.status(200).json({
-                message: "Successful",
+                message: "done",
             });
         } else {
             return res.status(400).json({
-                message: "Already Following!",
+                message: "invalid",
             });
         }
     } catch (err) {
@@ -39,11 +39,11 @@ exports.unfollowUser = async function (req, res, next) {
             await foundUser.save();
 
             return res.status(200).json({
-                message: "Successful",
+                message: "done",
             });
         } else {
             return res.status(400).json({
-                message: "Already UnFollowed!",
+                message: "invalid",
             });
         }
     } catch (err) {

@@ -25,6 +25,29 @@ exports.createTweet = async function (req, res, next) {
     }
 };
 
+exports.getTweet = async function (req, res, next) {
+    try {
+        let foundTweet = await db.Tweet.findById(req.params.tweet_id)
+            .populate("user", {
+                username: true,
+                profileImageThumb: true,
+                name: true,
+            })
+            .populate("likes", {
+                username: true,
+            })
+            .populate("comments", {
+                text: true,
+                user: true,
+            })
+            .lean();
+
+        return res.status(200).json(foundTweet);
+    } catch (err) {
+        return next(err);
+    }
+};
+
 exports.deleteTweet = async function (req, res, next) {
     try {
         let foundTweet = await db.Tweet.findById(req.params.tweet_id);
@@ -50,11 +73,11 @@ exports.likeTweet = async function (req, res, next) {
             await foundTweet.save();
 
             return res.status(200).json({
-                message: "Successful",
+                message: "done",
             });
         } else {
             return res.status(400).json({
-                message: "Already Liked!",
+                message: "invalid",
             });
         }
     } catch (err) {
@@ -79,11 +102,11 @@ exports.unlikeTweet = async function (req, res, next) {
             await foundTweet.save();
 
             return res.status(200).json({
-                message: "Successful",
+                message: "done",
             });
         } else {
             return res.status(400).json({
-                message: "Already Disliked!",
+                message: "invalid",
             });
         }
     } catch (err) {
@@ -101,7 +124,7 @@ exports.addComment = async function (req, res, next) {
         await foundTweet.save();
 
         return res.status(201).json({
-            message: "Successful",
+            message: "done",
         });
     } catch (err) {
         next(err);

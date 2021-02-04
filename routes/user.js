@@ -4,16 +4,17 @@ const express = require("express"),
     });
 
 const { followUser, unfollowUser } = require("../handlers/user");
+
 const {
-    getUser,
+    getUserProfile,
     getUserLikes,
     getUserFollowing,
-} = require("../handlers/getUser");
-
-const { editProfile, resetPassword } = require("../handlers/profile");
+    editProfile,
+    resetPassword,
+} = require("../handlers/profile");
 const { uploadImage } = require("../middlewares/uploads");
 
-router.route("/profile").get(getUser);
+router.route("/profile").get(getUserProfile);
 
 router.route("/profile/edit").post(uploadImage, editProfile);
 
