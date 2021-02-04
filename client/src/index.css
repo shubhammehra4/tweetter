@@ -20,6 +20,13 @@ aside button span {
     @apply bg-blue-400 py-2 px-6 rounded-full text-white font-semibold;
 }
 
+.options {
+    @apply rounded-full py-0.5 px-1 cursor-pointer;
+}
+
+.menu-list {
+    @apply py-2 px-4 cursor-pointer hover:bg-gray-100;
+}
 @tailwind utilities;
 
 @layer utilities {

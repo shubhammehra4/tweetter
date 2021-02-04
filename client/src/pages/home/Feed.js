@@ -62,11 +62,7 @@ function Feed(props) {
                         like={like.bind(this, currentUser.id, t._id)}
                         unlike={unlike.bind(this, currentUser.id, t._id)}
                         correctUser={currentUser.id === t.user._id}
-                        deleteTweet={deleteTweet.bind(
-                            this,
-                            currentUser.id,
-                            t._id
-                        )}
+                        deleteTweet={deleteTweet.bind(this, t.user._id, t._id)}
                         ref={tweets.length === idx + 3 ? tweetElementRef : null}
                     />
                 ))}

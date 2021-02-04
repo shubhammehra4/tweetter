@@ -1,30 +1,49 @@
-import React from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AiOutlineTwitter, AiOutlineMail, AiOutlineUser } from "react-icons/ai";
 import { BiHomeCircle } from "react-icons/bi";
 import { HiOutlineHashtag } from "react-icons/hi";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { CgMoreO } from "react-icons/cg";
+import { CgMoreO, CgMoreVertical } from "react-icons/cg";
 import {
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuDivider,
-    Button,
     Icon,
     Avatar,
-    IconButton,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalOverlay,
+    useDisclosure,
 } from "@chakra-ui/react";
+import Menu from "@material-ui/core/Menu";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
-function Sidebar(props) {
-    const { currentUser, logout } = props;
+
+const Tweetbox = lazy(() => import("./Tweetbox"));
+
+function Sidebar({ currentUser, logout }) {
     const history = useHistory();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const [anchorEl1, setAnchorEl1] = useState(null);
+    const open1 = Boolean(anchorEl1);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClick1 = (event) => {
+        setAnchorEl1(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleClose1 = () => {
+        setAnchorEl1(null);
+    };
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleLogout = (e) => {
         e.preventDefault();
         logout();
-        console.log("done");
         history.push("/auth");
     };
 
@@ -56,29 +75,41 @@ function Sidebar(props) {
                     <Icon as={AiOutlineUser} />
                     <span>Profile</span>
                 </Link>
-                <Menu isLazy placement="top">
-                    <MenuButton
-                        as={Button}
-                        bg="white"
-                        _hover="none"
-                        fontSize="1.75rem"
-                        className="py-7 px-4 transition-colors duration-300 ease-out hover:bg-blue-100 hover:text-blue-500 focus:outline-none"
-                        borderRadius="10rem">
-                        <Icon className="text-left mr-4" as={CgMoreO} />
-                        More
-                    </MenuButton>
-                    <MenuList>
-                        <MenuItem>
-                            <Button>
-                                <ColorModeSwitcher justifySelf="flex-end" />
-                            </Button>
-                        </MenuItem>
-                        <MenuDivider />
-                        <MenuItem icon={<AiOutlineUser />}>Options</MenuItem>
-                        <MenuItem icon={<AiOutlineUser />}>Options</MenuItem>
-                    </MenuList>
+                <Link to="#" onClick={handleClick}>
+                    <Icon as={CgMoreO} />
+                    <span>More</span>
+                </Link>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    keepMounted
+                    onClose={handleClose}>
+                    <li className="menu-list">
+                        <ColorModeSwitcher />
+                    </li>
+                    <li className="menu-list">Option</li>
                 </Menu>
-                <div className="mt-auto mb-4 align-bottom rounded-full py-2 px-3 hover:bg-blue-100 flex items-center">
+
+                <button className="mt-2 tweet-btn" onClick={onOpen}>
+                    Tweet
+                </button>
+                <Modal onClose={onClose} isOpen={isOpen} isCentered>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalBody>
+                            <Suspense
+                                fallback={
+                                    <div className="p-12 text-center">
+                                        Loading...
+                                    </div>
+                                }>
+                                <Tweetbox currentUser={currentUser} />
+                            </Suspense>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
+
+                <div className="mt-auto mb-4 align-bottom rounded-full py-2 px-3 hover:bg-blue-100 flex items-center justify-items-center">
                     <Avatar name={currentUser.name} src="" />
                     <span className="ml-2 mr-4">
                         <p className="text-base font-bold">
@@ -88,21 +119,22 @@ function Sidebar(props) {
                             @{currentUser.username}
                         </p>
                     </span>
-                    <Menu isLazy>
-                        <MenuButton
-                            as={IconButton}
-                            icon={<CgMoreO />}
-                            variant="filled"
-                            _focus="none"
-                        />
-                        <MenuList>
-                            <MenuItem>
+                    <span className="ml-auto hover:text-blue-400 rounded-full p-1 cursor-pointer">
+                        <Icon as={CgMoreVertical} onClick={handleClick1} />
+                        <Menu
+                            anchorEl={anchorEl1}
+                            open={open1}
+                            keepMounted
+                            onClose={handleClose1}>
+                            <li className="menu-list">Option</li>
+                            <li className="menu-list">Option</li>
+                            <li className="menu-list">
                                 <button className="p-0" onClick={handleLogout}>
                                     Logout
                                 </button>
-                            </MenuItem>
-                        </MenuList>
-                    </Menu>
+                            </li>
+                        </Menu>
+                    </span>
                 </div>
             </div>
         </aside>
