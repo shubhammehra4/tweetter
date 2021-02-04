@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import {
     FormErrorMessage,
     FormLabel,
@@ -11,11 +12,12 @@ import {
 function Signin(props) {
     const { onAuth } = props;
     const { register, errors, handleSubmit, formState } = useForm();
+    const history = useHistory();
 
     function onSubmit(values) {
         onAuth("signin", values)
             .then(() => {
-                console.log("Sent");
+                history.push("/home");
             })
             .catch((err) => {
                 console.log(err);

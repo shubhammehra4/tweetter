@@ -15,7 +15,7 @@ function Signup(props) {
     function onSubmit(values) {
         onAuth("signup", values)
             .then(() => {
-                console.log("Done");
+                props.history.push("/home");
             })
             .catch(() => {
                 console.log(reqError);

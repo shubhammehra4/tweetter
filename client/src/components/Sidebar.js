@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AiOutlineTwitter, AiOutlineMail, AiOutlineUser } from "react-icons/ai";
 import { BiHomeCircle } from "react-icons/bi";
 import { HiOutlineHashtag } from "react-icons/hi";
@@ -18,7 +18,16 @@ import {
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 function Sidebar(props) {
-    const { currentUser } = props;
+    const { currentUser, logout } = props;
+    const history = useHistory();
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        logout();
+        console.log("done");
+        history.push("/auth");
+    };
+
     return (
         <aside className="h-full flex flex-col items-end text-xl">
             <Icon className="text-6xl mr-20" as={AiOutlineTwitter} />
@@ -87,7 +96,11 @@ function Sidebar(props) {
                             _focus="none"
                         />
                         <MenuList>
-                            <MenuItem>New Tab</MenuItem>
+                            <MenuItem>
+                                <button className="p-0" onClick={handleLogout}>
+                                    Logout
+                                </button>
+                            </MenuItem>
                         </MenuList>
                     </Menu>
                 </div>
