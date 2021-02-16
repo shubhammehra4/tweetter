@@ -5,6 +5,7 @@ import { logout } from "../store/actions/auth";
 import Sidebar from "../components/Sidebar";
 
 import Home from "./home/Home";
+import Profile from "./profile/Profile";
 
 function Main(props) {
     const { errors, currentUser, logout } = props;
@@ -36,7 +37,7 @@ function Main(props) {
                         <h1>Bookmarks</h1>
                     </Route>
                     <Route path="/:username">
-                        <h1>Profile</h1>
+                        <Profile currentUser={currentUser} />
                     </Route>
                     <Route path="/">
                         <Redirect exact to="/home" />
